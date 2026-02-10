@@ -1,10 +1,7 @@
-# Intelligent Virtual Human SDK Examples
+# Intelligent Virtual Human SDK (v2.0.0)
 
 
-<img src="./Documentations/images/Teaser.png" alt="teaser"
-    style="float: center; margin-right: 10px; " /> 
-
-The package contains the Intelligent Virtual Human SDK developed by the [human computer interaction group](https://www.inf.uni-hamburg.de/en/inst/ab/hci.html) at Hamburg University.  
+The package contains the Intelligent Virtual Human SDK developed by the [human computer interaction group](https://www.inf.uni-hamburg.de/en/inst/ab/hci.html) at Hamburg University. 
 
 <span style="color:red"> ***Please note that the usage of the SDK requires ethical & responsible use. Details can be found [here](./LICENSE.md).***</span>
 
@@ -17,19 +14,12 @@ Oliva, R., Wiesing, M., Gállego, J., Inami, M., Interrante, V., Lecuyer, A., Mc
 
 ##  Demo
 
-<img src="./Documentations/images/interoperability.gif" alt="teaser"
-    style="float: center; margin-right: 10px; " /> 
-
 Our toolkit is compatible with CC4, Microsoft-rocketbox, and DIDIMO 3D virtual humans. Due to the license restriction, we only include an example character and animations from Rocketbox characters. 
-
-See [here](https://www.youtube.com/watch?v=RDT30Evpmic&feature=youtu.be) for full demo video of the possibilities with this toolkit.
 
 
 ## Table of content 
 - [Requirements](#requirements)
-- [Dependencies](#dependencies)
 - [Main Features](#main-features)
-- [Development Road Map](#development-road-maps)
 - [Quick Start](#quick-start)
 - [Documentation](#documentation)
 - [DIDIMO Character License Notice](#didimo-character-license-notice)
@@ -41,22 +31,9 @@ See [here](https://www.youtube.com/watch?v=RDT30Evpmic&feature=youtu.be) for ful
 - [Acknowledgement](#acknowledgement)
 
 ### Requirements
-* Unity 2022.3 LTS, Universal Render Pipeline (URP)
-*  ``iva-server`` [node.js REST server for communicating with LLM/STT/STT cloud services](https://github.com/uhhhci/iva-server) 
-* ``intelligent-virtual-agent-sdk`` [iva-sdk](https://github.com/uhhhci/intelligent-virtual-agent-sdk)
-
-### Dependencies
-* [com.unity.animation.rigging (1.2.1)](https://docs.unity3d.com/Packages/com.unity.animation.rigging@1.2/manual/index.html) (Add package by name)
-* [com.unity.nuget.newtonsoft-json (3.2.1)](https://docs.unity3d.com/Packages/com.unity.nuget.newtonsoft-json@3.2/manual/index.html) (Add package by name)
-* [com.oculus.unity.integration.lip-sync (29.0.0)](https://openupm.com/packages/com.oculus.unity.integration.lip-sync/) (Add from git URL: `https://github.com/Trisgram/com.oculus.unity.integration.lip-sync.git`)
-* [com.gpt4all.unity](https://github.com/Macoron/gpt4all.unity) (Add package from git URL: `https://github.com/Macoron/gpt4all.unity.git?path=/Packages/com.gpt4all.unity`)
-* [com.whisper.unity](https://github.com/Macoron/whisper.unity) (Add from git URL: `https://github.com/Macoron/whisper.unity.git?path=/Packages/com.whisper.unity`)
-* [com.meta.movement](https://github.com/oculus-samples/Unity-Movement.git) (Add from git URL: `https://github.com/oculus-samples/Unity-Movement.git`)
+* Unity 2022.3 LTS and above, Universal Render Pipeline (URP)
 
 ### Main features
-
-<img src=".//Documentations/images/System_Setup.png" alt="teaser"
-    style="float: center; margin-right: 10px; " /> 
 The image above shows the interaction loop of a conversational virtual agent. 
 
 * Conversational intelligent virtual agents with human-AI interaction loop.
@@ -64,85 +41,106 @@ The image above shows the interaction loop of a conversational virtual agent.
     - <b>structure output from LLM/VLM</b>, containing selected action, facial expression, and text response.
     - <b>realistic IVA behavior</b> combining the multimodal output, including gaze, action, and facial expressions. 
 
-* <b>Modulized cloud services</b> of speech-to-text, large language models and text to speech models to choose from
-  * LLM/VLM: OpenAI GPT-4o (via server), Google Gemini, OpenAI GPT-4o, local LLM(GPT4All, very slow)
-  * STT: Google cloud (via server), Whisper (local, but very slow!)
-  * TTS: Eleven Labs, Google Cloud (via server), Azure
 
-### Development Road Maps
+If you want to have more modularized cloud services (e.g. using different STT, LLM, TTS models), checkout [documentation for v1.0](./README_v1.0.md)
 
-Features coming soon: 
-- update and improve documentation
-- Add ``Unity_STT_GoogleCloud`` and ``Unity_STT_Azure``
-- proximity detection in VR
-- gesture recognition integration
-- integration of more diverse publically avalibleble animations and more diverse ready-made animation controllers
-- spatial understanding
-- memory management for long term interaction
 
 ## Quick Start
 
-### Open as Unity Project
-1. Make sure you have the correct Unity version installed.
-2. Clone this repository to the desired location by executing: git clone https://github.com/uhhhci/intelligent-virtual-agent-sdk-examples.git in a terminal or using your favorite Git tool. You can alternatively download the .zip file and extract it from there.
-3. In Unity Hub, do "add project from disk" and select the folder "intelligent-virtual-agent-sdk-examples" from the location you cloned to
+#### Simple Agent- Quick Start
+- An example agent can be added by creating an empty Gameobject in the scene and adding the script: `Packages/de.uhh.hci.ivh.core/Runtime/Scripts/IntelligentVirtualAgent/GeminiLiveAgent.cs` to it. 
+    
+- In its field "Agent Prefab" you can drag e.g.: `Packages/de.uhh.hci.ivh.core/Runtime/Models/Rocketbox/Business_Female_01/Export/Business_Female_01_facial.fbx`.
+
+- In its field "Animator Controller" you need to drag in `Packages/de.uhh.hci.ivh.core/Runtime/AnimationControllers/RocketboxFemale.controller`.
+
+- In the Emotion Handler Type, choose FACS. If you want more diverse and sophisicated facial expression animations, and if you have a license for CC4 digital soul facial expression animation database, see [CC4 Characters and Animations](#reallusion-animation).
+
+- In the CharacterType, choose ``Rocketbox`` if you are using rocketbox character. Choose ``CC4orDIDIMO`` otherwise. 
 
 
-  #### Simple Agent
-  - In the Project view, add `Packages/de.uhh.hci.ivh.core/Runtime/Prefabs/BasicServiceTemplate.prefab` to the ``conversationalAgent`` component
+- Any ``Additional Description`` will be added to the IVA's system prompt. 
 
-  - An example agent can be added by creating an empty Gameobject in the scene and adding the script: `Packages/de.uhh.hci.ivh.core/Runtime/Scripts/IntelligentVirtualAgent/ConversationalAgent.cs` to it. 
-  
-  - In its field "Agent Prefab" you can drag e.g.: `Packages/de.uhh.hci.ivh.core/Runtime/Models/Rocketbox/Business_Female_01/Export/Business_Female_01_facial.fbx`.
 
-  - In its field "Animator Controller" you need to drag in `Packages/de.uhh.hci.ivh.core/Runtime/AnimationControllers/RocketboxFemale.controller`.
+- After you added both the Animator Controller and the agent model, click on `Setup Agent` in the Editor.
 
-  - In the Emotion Handler Type, choose FACS. If you want more diverse and sophisicated facial expression animations, and if you have a license for CC4 digital soul facial expression animation database, see [CC4 Characters and Animations](#reallusion-animation).
 
-  - In the CharacterType, choose ``Rocketbox`` if you are using rocketbox character. Choose ``CC4orDIDIMO`` otherwise. 
+- Add the `Packages/de.uhh.hci.ivh.core/Runtime/Prefabs/PreviewScenePrefab.prefab` to the scene for better lighting and appearance of the scene. 
 
-  - STT Trigger Settings, in ``Automatic`` mode, the IVA does not need to be triggered via developer defined trigger phrase. In ``Trigger Always``, the IVA will only respond to you if you started the conversation with a trigger phrase. This is developer's choice for ensuring trustworthy AI best practice. 
+- A sample scene with ``Gemini Live Agent `` is already setup in the ``Assets/Samples/ConversationalAgent/GeminiLiveAgent`` Unity scene. 
 
-  - Any ``Additional Description`` will be added to the IVA's system prompt. 
 
-  - Under the `Cloud Service Settings` in the Editor, choose the UHAM services for TTS, Foundation Model and STT Service.
+## Connect to Gemini Live Cloud Service
 
-  - In the ``BasicServerManager`` game object and in ``Google TTS``, choose the desired voice for your character. 
+The current implementation supports 3 different live model. Two free-tier models from google AI studio and one paid model from Google's Vertex AI. 
 
-  - After you added both the Animator Controller and the agent model, click on `Setup Agent` in the Editor.
+| Model Variant | Source | Tier | Latency | Model ID / Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| **Gemini Live 2.5 Flash** | Vertex AI | Paid | Low | [`gemini-live-2.5-flash-native-audio`](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/live-api) |
+| **Gemini Live 2.5 Flash** | Google AI | Free | High | [`gemini-2.5-flash-native-audio-preview-12-2025`](https://ai.google.dev/gemini-api/docs/live?example=mic-stream) |
+| **Gemini 2.0 Flash Exp** | Google AI | Free | Low | `gemini-2.0-flash-exp`<br>*(To be deprecated/terminated in March 2026)* |
 
-  - Add the `Packages/de.uhh.hci.ivh.core/Runtime/Prefabs/PreviewScenePrefab.prefab` to the scene for better lighting and appearance of the scene. 
+### Option 1: Google AI Studio (Quick Start)
+*Recommended for individual developers and prototyping. Please check [Google AI Studio Documentations](https://ai.google.dev/gemini-api/docs/pricing#gemini-2.5-flash-native-audio) for further details.*
 
-  #### Advance Agent- with vision capability, proximity, etc (coming soon..)
-  
+1.  **Get the Key:**
+    * Visit [Google AI Studio](https://aistudio.google.com/).
+    * Click **Get API key** in the left sidebar.
+    * Click **Create API key**.
 
-## Connect to Cloud Services
+2.  **Create the Auth File:**
+    * Navigate to your `.aiapi` directory.
+    * Create a file named `auth.json`.
+    * Paste the following JSON content:
 
-For the main functions of the package you will need different API-keys. See the documentation in the [iva-server](https://github.com/uhhhci/iva-server) of how to get the API keys. 
+    ```json
+    {
+        "gemini_api_key": "PASTE_YOUR_API_KEY_HERE"
+    }
+    ```
 
-- To connect to the core services you can use the [IVA Server](https://github.com/uhhhci/iva-server). In the BasicServiceTemplate in your scene you now need to set the IP to "localhost" the UHAMServerManager.
+### Option 2: Google Cloud Vertex AI (Enterprise)
+*Recommended for production applications requiring higher rate limits and strict data compliance.*
 
-- If you are students at Hamburg University, you can connect via the UHAM hosted server, please contact your supervisor/admin for the IP adress. In the BasicServiceTemplate in your scene you can add this IP to the BasicServerManager.
+#### 1. Enable the API
+1.  Go to the [Google Cloud Console](https://console.cloud.google.com/).
+2.  Select your project (or create a new one).
+3.  In the top search bar, type **"Vertex AI API"**.
+4.  Select it from the Marketplace results and click **Enable**.
 
-If you are testing with the following cloud service, you should enter your API key in an ``auth.json`` file in the ``C:\Users\USER_NAME\.aiapi``
- directory for Unity to directly parse the API key: 
+#### 2. Create a Service Account
+1.  In the search bar, type **"Service Accounts"** (found under **IAM & Admin**) and open it.
+2.  Click **+ CREATE SERVICE ACCOUNT** at the top.
+3.  **Step 1 (Details):** Enter a name (e.g., `unity-gemini-app`) and click **Create and Continue**.
+4.  **Step 2 (Permissions):**
+    * Click the **Select a role** filter.
+    * Type **"Vertex AI User"** and select it.
+    * *Note: This specific role is required to invoke models.*
+    * Click **Continue** and then **Done**.
 
- ```json
-{
-    "openai_api_key": "YOUR API KEY",
-    "gemini_api_key": "YOUR API KEY",
-    "azure_subscription_key": "YOUR API KEY",
-    "azure_endpoint_id": "YOUR API KEY",
-    "eleven_labs_api_key": "YOUR API KEY"
-}
- ```
+#### 3. Generate and Save Credentials
+1.  In the Service Accounts list, click the **Email address** of the account you just created.
+2.  Click the **Keys** tab in the top navigation bar.
+3.  Click **Add Key** → **Create new key**.
+4.  Select **JSON** and click **Create**.
+5.  A JSON file will download to your computer.
 
+#### 4. Install the Credential File
+1.  Rename the downloaded file to: `service-account.json`.
+2.  Move the file into your configuration directory:
+    `C:\Users\YOUR_USERNAME\.aiapi\`
+
+### ✅  Verification
+Your `.aiapi` folder should contain one of the following files depending on your chosen method:
+
+* `auth.json` (for AI Studio)
+* `service_account.json` (for Vertex AI)
 
 ## Documentation
 
-- <b>component-wise documentations</b> : COMING SOON!
+- For the full Documentation, visit the [Wiki](https://github.com/uhhhci/intelligent-virtual-agent-sdk/wiki).
 - [How to add more/custom animations to IVA actions](./Documentations/howToAddMoreAnimations.md)
-- [How to develop the package while using it  in Unity](./Documentations/howToDevelopPackage.md)
+- [How to develop the package while using it  in Unity](https://github.com/uhhhci/intelligent-virtual-agent-sdk/wiki/Development).
 
 ## [DIDIMO](https://www.didimo.co/) Character License Notice
 
@@ -178,14 +176,6 @@ This toolkit is released for academic and research purposes only, free of charge
 If this work helps your research, please cite the following papers:
 
 ```
-@article{Mostajeran2025ATF,
-  title={A Toolkit for Creating Intelligent Virtual Humans in Extended Reality},
-  author={Fariba Mostajeran and Ke Li and Sebastian Rings and Lucie Kruse and Erik Wolf and Susanne Schmidt and Michael Arz and Joan Llobera and Pierre Nagorny and Caecilia Charbonnier and Hannes Fassold and Xenxo Alvarez and Andr{\'e} Tavares and Nuno Santos and Jo{\~a}o Orvalho and Sergi Fern{\'a}ndez and Frank Steinicke},
-  journal={2025 IEEE Conference on Virtual Reality and 3D User Interfaces Abstracts and Workshops (VRW)},
-  year={2025},
-  pages={736-741},
-  url={https://api.semanticscholar.org/CorpusID:278065150}
-}
 
 @article{Li2025IHS,
   title={I Hear, See, Speak \& Do: Bringing Multimodal Information Processing to Intelligent Virtual Agents for Natural Human-AI Communication},
@@ -195,6 +185,16 @@ If this work helps your research, please cite the following papers:
   pages={1648-1649},
   url={https://api.semanticscholar.org/CorpusID:278063630}
 }
+
+@article{Mostajeran2025ATF,
+  title={A Toolkit for Creating Intelligent Virtual Humans in Extended Reality},
+  author={Fariba Mostajeran and Ke Li and Sebastian Rings and Lucie Kruse and Erik Wolf and Susanne Schmidt and Michael Arz and Joan Llobera and Pierre Nagorny and Caecilia Charbonnier and Hannes Fassold and Xenxo Alvarez and Andr{\'e} Tavares and Nuno Santos and Jo{\~a}o Orvalho and Sergi Fern{\'a}ndez and Frank Steinicke},
+  journal={2025 IEEE Conference on Virtual Reality and 3D User Interfaces Abstracts and Workshops (VRW)},
+  year={2025},
+  pages={736-741},
+  url={https://api.semanticscholar.org/CorpusID:278065150}
+}
+
 ```
 
 
